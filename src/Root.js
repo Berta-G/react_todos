@@ -1,5 +1,5 @@
 import React from 'react';
-import Counter from './module/Counter';
+import Todo from './module/Todo';
 import ControlBar from './module/ControlBar';
 
 //use this component as it was the entry point of your dev server
@@ -7,49 +7,42 @@ import ControlBar from './module/ControlBar';
 const Root = React.createClass({
 
     getInitialState() {
-        return {counters: [0, 0, 0, 0, 0]};
+        return {todos: ['my first todo']};
     },
 
     render() {
         return <div>
-            <ControlBar step={1} onAddCounter={this._addCounter} onChange={this._applyOffsetAll} />
+            <ControlBar step={1} onAddTodo={this._addTodo} onChange={this._applyOffsetAll} />
             {
-                this.state.counters.map((v, i) => <Counter key={i} step={1} value={v} onRemove={this._onRemoveCounter(i)} onChange={this._applyOffset(i)}/>)
+                this.state.todos.map((v, i) => <Todo key={i} step={1} value={v} onRemove={this._onRemoveTodo(i)} onChange={this._applyOffset(i)}/>)
             }
-            <ControlBar step={1} onAddCounter={this._addCounter} onChange={this._applyOffsetAll} />
         </div>
     },
 
-    _onRemoveCounter(itemToRemove) {
+    _onRemoveTodo(itemToRemove) {
         return () => {
             this.setState({
-                counters: this.state.counters.filter((counter, k) => k !== itemToRemove)
+                todos: this.state.todos.filter((Todo, k) => k !== itemToRemove)
             })
-
-            // let newCounters = this.state.counters.slice();
-            //
-            // newCounters.splice(index, 1);
-            //
-            // this.setState({counters: newCounters});
         }
     },
 
-    _addCounter() {
-        this.setState({counters:[...this.state.counters, 0]});
+    _addTodo() {
+        this.setState({todos:[...this.state.todos, '']});
     },
 
     _applyOffset(index) {
-        return (inc) => {
-            let newCounters = this.state.counters.slice();
-            newCounters[index] += inc;
-            this.setState({counters: newCounters});
+        return (text) => {
+            let newTodos = this.state.todos.slice();
+            newTodos[index] = text;
+            this.setState({todos: newTodos});
         };
     },
 
     _applyOffsetAll(inc) {
-        let newCounters = this.state.counters.slice();
-        newCounters = newCounters.map(v => v + inc);
-        this.setState({counters: newCounters});
+        let newTodos = this.state.todos.slice();
+        newTodos = newTodos.map(v => v + inc);
+        this.setState({todos: newTodos});
     }
 
 });

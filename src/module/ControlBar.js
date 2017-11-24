@@ -1,20 +1,9 @@
 import React from 'react';
 
-const Footer = ({step, onChange, onAddCounter}) => {
-
-    let inc = () => {
-        onChange(step);
-    };
-
-    let dec = () => {
-        onChange(-step);
-    };
+const Footer = ({onAddTodo}) => {
 
     return <div>
-        <button onClick={inc}>Inc all by {step}</button>
-        <button onClick={dec}>Dec all by {step}</button>
-
-        <button onClick={onAddCounter}>Add Counter</button>
+        <button onClick={onAddTodo}>Add Todo</button>
     </div>
 };
 export default Footer;
