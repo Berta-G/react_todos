@@ -3,28 +3,29 @@ import React from 'react';
 const Todo = React.createClass({
 
     render() {
-        console.log('jai');
-
-        const {onRemove, value} = this.props;
+        const {onRemove, value, isDone} = this.props;
 
         return <div>
-            <input value={value} onChange={this.handleChange} />
+            <input value={value} type={'text'} onChange={this.handleTextChange} />
             <button onClick={onRemove}>Remove</button>
+            <input checked={isDone} type={'checkbox'} onChange={this.handleDoneChange}/>
+            {isDone && <span>I AM COMPLETE</span>}
         </div>
     },
 
-    getInitialState() {
-        return {value: this.props.value};
-    },
-
     shouldComponentUpdate(nextProps) {
-        return this.props.value !== nextProps.value;
+        console.log(nextProps);
+        return (this.props.value !== nextProps.value) || (this.props.isDone !== nextProps.isDone);
     },
 
-    handleChange(event) {
-        this.props.onChange(event.target.value)
+    handleTextChange(event) {
+        this.props.handleTextChange(event.target.value)
+    },
+
+    handleDoneChange(event) {
+        console.log(event.target);
+        this.props.handleDoneChange(!!event.target.checked)
     }
 
 });
 export default Todo;
-
